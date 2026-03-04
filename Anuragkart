@@ -1,302 +1,334 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amarkart - Shop India’s Best</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
-        }
-        body {
-            background: #f1f3f6;
-            color: #212121;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #2874f0;
-            color: #fff;
-            padding: 10px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .search-bar {
-            flex: 1;
-            margin: 0 20px;
-            position: relative;
-        }
-        .search-bar input {
-            width: 100%;
-            padding: 10px 40px 10px 15px;
-            border: none;
-            border-radius: 2px;
-            font-size: 14px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .search-bar button {
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #ff6161;
-            color: #fff;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 2px;
-            cursor: pointer;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-links li {
-            margin: 0 15px;
-        }
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover {
-            color: #ff6161;
-        }
-        .section {
-            display: none;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-        .section.active {
-            display: block;
-        }
-        .hero {
-            background: #2874f0;
-            color: #fff;
-            text-align: center;
-            padding: 50px 20px;
-            margin-bottom: 20px;
-        }
-        .hero h1 {
-            font-size: 36px;
-            font-weight: 500;
-        }
-        .hero p {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-        .cta-btn {
-            background: #ff6161;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s;
-        }
-        .cta-btn:hover {
-            background: #ff8f8f;
-        }
-        .filters {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-        .filters select, .filters input {
-            padding: 8px;
-            border: 1px solid #d4d5d9;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .product {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #f1f3f6;
-            border-radius: 4px;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s;
-        }
-        .product:hover {
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .product img {
-            max-width: 100%;
-            border-radius: 4px;
-        }
-        .product h3 {
-            font-size: 16px;
-            margin: 10px 0;
-            color: #212121;
-        }
-        .product .price {
-            font-size: 16px;
-            color: #388e3c;
-            font-weight: 600;
-        }
-        .product .rating {
-            color: #ffca28;
-            font-size: 12px;
-            margin: 5px 0;
-        }
-        .add-to-cart {
-            background: #ff6161;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        .add-to-cart:hover {
-            background: #ff8f8f;
-        }
-        .product-details {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-            background: #fff;
-            border: 1px solid #f1f3f6;
-            border-radius: 4px;
-            margin-top: 15px;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        }
-        .product-details img {
-            max-width: 300px;
-            border-radius: 4px;
-        }
-        .product-details .info {
-            flex: 1;
-        }
-        .cart-items, .checkout-form {
-            background: #fff;
-            padding: 20px;
-            border: 1px solid #f1f3f6;
-            border-radius: 4px;
-            margin-top: 15px;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-        }
-        .cart-items ul {
-            list-style: none;
-        }
-        .cart-items li {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f1f3f6;
-        }
-        .checkout-form form {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .checkout-form input, .checkout-form select {
-            padding: 10px;
-            border: 1px solid #d4d5d9;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        footer {
-            background: #2874f0;
-            color: #fff;
-            text-align: center;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; padding: 10px; }
-            .search-bar { margin: 10px 0; width: 100%; }
-            .hero h1 { font-size: 28px; }
-            .hero p { font-size: 16px; }
-            .product-details { flex-direction: column; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LifePilot AI | Decision Helper</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: rgba(15, 23, 42, 0.75);
+      --surface-light: #f8fafc;
+      --text: #e2e8f0;
+      --text-dark: #0f172a;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #a78bfa;
+      --border: rgba(148, 163, 184, 0.25);
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 20%, #1e293b, #0b1120 45%), var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 17, 32, 0.75);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 0;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: #f8fafc;
+    }
+
+    .brand span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      list-style: none;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 5rem 0 3rem;
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.4rem 0.8rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    h1 {
+      font-size: clamp(1.85rem, 5vw, 3.2rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      max-width: 680px;
+      margin: 0 auto 1.8rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border: none;
+      border-radius: 10px;
+      padding: 0.85rem 1.25rem;
+      font-weight: 700;
+      color: #020617;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    section { margin-bottom: 2.2rem; }
+
+    .ask {
+      padding: 1.2rem;
+    }
+
+    .ask h2,
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+      color: #f8fafc;
+    }
+
+    .ask p { color: var(--muted); margin-bottom: 1rem; }
+
+    .ask-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.7);
+      color: var(--text);
+      padding: 0.9rem;
+      font-size: 0.98rem;
+    }
+
+    #advice {
+      margin-top: 0.95rem;
+      padding: 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      background: rgba(56, 189, 248, 0.08);
+      color: #e0f2fe;
+      min-height: 52px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .feature {
+      padding: 1rem;
+    }
+
+    .icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.65rem;
+      display: inline-block;
+    }
+
+    .feature h3 { font-size: 1.03rem; margin-bottom: 0.35rem; }
+    .feature p { color: var(--muted); font-size: 0.95rem; }
+
+    .dual {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .list-card {
+      padding: 1.1rem;
+      background: linear-gradient(145deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.75));
+    }
+
+    .list-card ul {
+      margin-left: 1.1rem;
+      color: var(--muted);
+    }
+
+    .list-card li { margin-bottom: 0.5rem; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1.4rem 0 2rem;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dual { grid-template-columns: 1fr; }
+      .ask-form { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .hero { padding-top: 3.8rem; }
+      .grid { grid-template-columns: 1fr; }
+      .nav { justify-content: center; }
+      .nav-links { justify-content: center; }
+    }
+
+    .light-panel {
+      background: var(--surface-light);
+      color: var(--text-dark);
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      padding: 1rem;
+    }
+
+    .light-panel p { color: #334155; }
+  </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="logo">Amarkart</div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search for products..." id="search-input">
-                <button onclick="searchProducts()">Search</button>
-            </div>
-            <ul class="nav-links">
-                <li><a onclick="showSection('home')">Home</a></li>
-                <li><a onclick="showSection('shop')">Shop</a></li>
-                <li><a onclick="showSection('cart')">Cart</a></li>
-                <li><a onclick="showSection('checkout')">Checkout</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div class="container nav">
+      <div class="brand">Life<span>Pilot AI</span></div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#benefits">Benefits</a></li>
+      </ul>
+    </div>
+  </header>
 
-    <section id="home" class="section active">
-        <div class="hero">
-            <h1>Explore India’s Best Deals</h1>
-            <p>Clothes, Electronics, Handmade & More</p>
-            <a href="#shop" class="cta-btn">Shop Now</a>
-        </div>
-        <h2>Bestsellers</h2>
-        <div class="product-grid" id="bestsellers"></div>
+  <main class="container">
+    <section class="hero">
+      <span class="pill">AI Life Decision Helper</span>
+      <h1>Ask AI Anything About Your Life Decisions</h1>
+      <p>Get practical, personalized guidance for your studies, career plans, fitness goals, and daily productivity—designed for students and young people.</p>
+      <a class="btn" href="#ask">Ask AI Now</a>
     </section>
 
-    <section id="shop" class="section">
-        <h1>Shop All Products</h1>
-        <div class="filters">
-            <select id="sort" onchange="sortProducts()">
-                <option value="default">Sort by</option>
-                <option value="high-to-low">Price: High to Low</option>
-                <option value="low-to-high">Price: Low to High</option>
-            </select>
-            <input type="number" placeholder="Min Price" id="min-price" oninput="filterProducts()">
-            <input type="number" placeholder="Max Price" id="max-price" oninput="filterProducts()">
-        </div>
-        <div class="product-grid" id="shop-products"></div>
+    <section id="ask" class="card ask">
+      <h2>Get AI Advice Instantly</h2>
+      <p>Type your question and receive clear next steps you can apply right away.</p>
+      <div class="ask-form">
+        <textarea id="question" placeholder="Example: Should I focus on coding internships or higher studies this year?"></textarea>
+        <button class="btn" onclick="getAdvice()">Ask AI Now</button>
+      </div>
+      <div id="advice">Your AI guidance will appear here.</div>
     </section>
 
-    <section id="product" class="section">
-        <div class="product-details">
-            <img id="product-img" src="" alt="Product Image">
-            <div class="info">
-                <h1 id="product-name"></h1>
-                <p class="price" id="product-price"></p>
-                <div class="rating">★★★★☆ (4.5)</div>
-                <p id="product-desc"></p>
-                <button class="add-to-cart" id="product-add-btn">Add to Cart</button>
-                <p>Payment Options: <strong>UPI</strong> | <strong>COD</strong></p>
-            </div>
-        </div>
+    <section id="features">
+      <h2 class="section-title">Features</h2>
+      <div class="grid">
+        <article class="card feature"><span class="icon">📚</span><h3>Study Planner</h3><p>Plan smarter exam prep and choose the right learning path.</p></article>
+        <article class="card feature"><span class="icon">💼</span><h3>Career Direction</h3><p>Compare career options and make confident decisions.</p></article>
+        <article class="card feature"><span class="icon">🏃</span><h3>Health & Fitness</h3><p>Build habits that balance physical wellness with busy schedules.</p></article>
+        <article class="card feature"><span class="icon">⚡</span><h3>Daily Productivity</h3><p>Get quick routines to reduce stress and improve focus each day.</p></article>
+      </div>
     </section>
 
-    <section id="cart" class="section">
-        <h1>Your Cart</h1>
-        <div class="cart-items">
-            <ul id="cart-items"></ul>
-            <p>Total: ₹<span id="cart-total">0</span></p>
-            <div class="cta-btn" onclick="showSection('checkout
+    <section id="how" class="dual">
+      <article class="card list-card">
+        <h2 class="section-title">How It Works</h2>
+        <ul>
+          <li>Share your question in natural language.</li>
+          <li>AI analyzes your priorities and constraints.</li>
+          <li>Receive simple, actionable advice with next steps.</li>
+        </ul>
+      </article>
+      <article class="light-panel">
+        <h2 class="section-title">Benefits</h2>
+        <p>Make faster and better life decisions with personalized support that feels clear, modern, and easy to follow.</p>
+        <ul>
+          <li>Reduces confusion and overthinking</li>
+          <li>Supports better long-term planning</li>
+          <li>Helps you stay consistent and motivated</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Built for young achievers • LifePilot AI Decision Helper
+  </footer>
+
+  <script>
+    const suggestions = [
+      "Start with a 30-day experiment: set one main goal, review progress weekly, and adapt your plan based on what works.",
+      "Use a 70/20/10 approach: spend 70% effort on your priority, 20% on skill building, and 10% on exploration.",
+      "Choose the option that gives both short-term momentum and long-term growth, then define 3 measurable actions for this week.",
+      "Break your decision into factors: time, cost, energy, and opportunity. Score each option from 1 to 10 and pick the highest total."
+    ];
+
+    function getAdvice() {
+      const input = document.getElementById("question");
+      const output = document.getElementById("advice");
+      const question = input.value.trim();
+
+      if (!question) {
+        output.textContent = "Please enter a question so AI can help you with a clear suggestion.";
+        return;
+      }
+
+      const pick = suggestions[Math.floor(Math.random() * suggestions.length)];
+      output.textContent = `Question received: "${question}". Suggested next step: ${pick}`;
+    }
+  </script>
+</body>
+</html>
